@@ -28,14 +28,27 @@ mito_arr, nuclei_arr = separate_mito_nuclei(vol)
 # Compute parameters and save
 if 'volume' in args.tasks:
     volume_outpath = os.path.join(args.output_directory, 'volumes.npy')
-    compute_volume(mito_arr, volume_outpath, save=True)
+    mito_volume.compute_volume(mito_arr, volume_outpath, save=True)
 if 'length' in args.tasks:
     length_outpath = os.path.join(args.output_directory, 'lengths.npy')
-    compute_length(mito_arr, length_outpath, save=True)
+    mito_length.compute_length(mito_arr, length_outpath, save=True)
 if 'sphericity' in args.tasks:
     sphericity_outpath = os.path.join(args.output_directory, 'sphericity.npy')
-    compute_sphericity(mito_arr, sphericity_outpath, save=True)
+    mito_sphericity.compute_sphericity(mito_arr, sphericity_outpath, save=True)
 if 'total_distance' in args.tasks:
     distance_outpath = os.path.join(args.output_directory, 'distances.npy')
-    compute_total_distances(mito_arr, nuclei_arr, distance_outpath, save=True)
-
+    all_distances.compute_total_distances(
+        mito_arr, 
+        nuclei_arr, 
+        distance_outpath, 
+        save=True
+    )
+if 'to_imod' in args.tasks:
+    volume_to_txt(
+        vol, 
+        args.output_directory, 
+        'mito_nucleus', 
+        remove_holes=False, 
+        min_slice=0,
+        max_slice=-1
+    )
